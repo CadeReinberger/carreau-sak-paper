@@ -1,0 +1,17 @@
+#!/bin/bash
+# Run a MATLAB .m script via the Windows MATLAB executable from WSL2.
+# Usage: matlab <script.m>
+
+MATLAB_EXE="/mnt/c/Program Files/MATLAB/R2024a/bin/matlab.exe"
+
+if [ -z "$1" ]; then
+    echo "Usage: $(basename "$0") <script.m>" >&2
+    exit 1
+fi
+
+# Resolve to absolute Linux path, then convert to Windows path for the .exe
+ABS_PATH=$(realpath "$1")
+WIN_PATH=$(wslpath -w "$ABS_PATH")
+
+# -batch: no GUI, auto-exits, returns non-zero on error
+"$MATLAB_EXE" -batch "run('${WIN_PATH//\'/\'\'}')"
