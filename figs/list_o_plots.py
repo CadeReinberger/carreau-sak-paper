@@ -47,9 +47,9 @@ def plot_tau_vs_rex_no_mu_inf(alpha):
             tau_car[ind] = tau
         
         # Finally add it to the plot
-        # plt.semilogx(Res, tau_pl, 'c--', label=f'PL De={De}')
-        # plt.semilogx(Res, tau_car, 'm-.', label=f'Carreau De={De}')
-        plt.semilogx(Res, np.abs((tau_pl-tau_car) / (tau_car)), '--', label=f'De={De}')
+        plt.semilogx(Res, tau_pl, 'c--', label=f'PL De={De}')
+        plt.semilogx(Res, tau_car, 'm-.', label=f'Carreau De={De}')
+        # plt.semilogx(Res, np.abs((tau_pl-tau_car) / (tau_car)), '--', label=f'De={De}')
         
     plt.xlabel('Re_x')
     plt.ylabel('Relative Error in Tau')
