@@ -36,7 +36,7 @@ plt.rcParams.update({
     "lines.linewidth": 2.6,
 })
 
-KAPPA_NEWTONIAN = 0.4437483133688610511198328438501
+KAPPA_NEWTONIAN = 0.33205733621519630
 DELTA_MULTIPLIERS = [0.01, 0.25, 1.0, 10.0]
 DELTA_COLORS = {
     0.01: "tab:blue",
@@ -61,19 +61,19 @@ def carreau_solution(alpha, delta, mu_inf):
 @lru_cache(maxsize=None)
 def carreau_kappa(alpha, delta, mu_inf):
     _, y = carreau_solution(alpha, delta, mu_inf)
-    return -y[2, 0]
+    return y[2, 0]
 
 
 @lru_cache(maxsize=None)
 def power_law_profile(alpha):
     sd = ez_numerics.make_pl_default_unstable_solution_data(alpha)
-    return ez_numerics.compute_power_law_bvp_soln(alpha, sd)
+    return ez_numerics.compute_power_law_ivp_soln(alpha, sd)
 
 
 @lru_cache(maxsize=None)
 def newtonian_profile():
     sd = ez_numerics.make_pl_default_unstable_solution_data(1.0)
-    return ez_numerics.compute_power_law_bvp_soln(1.0, sd)
+    return ez_numerics.compute_power_law_ivp_soln(1.0, sd)
 
 
 
@@ -133,17 +133,29 @@ def build_profile_curves(alpha, delta, mu_inf=0.0):
 
 
 def plot_shear_row():
+    # Each De curve uses its own Re grid bounded so that delta = De²/Re stays in
+    # [DELTA_MIN_MULT, DELTA_MAX_MULT] × delta_star.  This keeps the Carreau BVP
+    # well within the convergent regime while covering the full transition.
+    DELTA_MAX_MULT = 50.0
+    DELTA_MIN_MULT = 2e-3
+
     fig, axes = plt.subplots(1, 3, figsize=(21, 6), constrained_layout=True)
 
     for ax, alpha in zip(axes, ALPHAS):
         de_values = np.asarray(DE_VALUES_BY_ALPHA[alpha], dtype=float)
         delta_star = compute_delta_star(alpha)
-        re_grid = default_re_grid(alpha, de_values)
 
-        tau_newtonian = KAPPA_NEWTONIAN * re_grid**-0.5
-        ax.loglog(re_grid, tau_newtonian, color="black", linestyle="-", label="Newtonian")
+        # Newtonian reference spans the union of all per-De Re ranges
+        re_newt_min = max(1e-6, min(De**2 / (DELTA_MAX_MULT * delta_star) for De in de_values))
+        re_newt_max = max(De**2 / (DELTA_MIN_MULT * delta_star) for De in de_values)
+        re_newt = np.logspace(np.log10(re_newt_min), np.log10(re_newt_max), num=NUM_RE_POINTS)
+        ax.loglog(re_newt, KAPPA_NEWTONIAN * re_newt**-0.5, color="black", linestyle="-", label="Newtonian")
 
         for De in de_values:
+            re_min_de = max(1e-6, De**2 / (DELTA_MAX_MULT * delta_star))
+            re_max_de = De**2 / (DELTA_MIN_MULT * delta_star)
+            re_grid = np.logspace(np.log10(re_min_de), np.log10(re_max_de), num=NUM_RE_POINTS)
+
             tau_pl = tau_power_law(alpha, re_grid, De, MU_INF)
             ax.loglog(re_grid, tau_pl, color="c", linestyle="--", label=fr"PL $De={De:g}$")
 
@@ -171,7 +183,6 @@ def plot_shear_row():
         ax.set_ylabel(r"$\tau$" if ax is axes[0] else "")
         ax.set_title(fr"$\alpha={alpha}$")
         ax.grid(True, which="both", alpha=0.25)
-
         ax.legend(loc="best")
 
     outpath = OUTPUT_DIR / "new_shear.png"

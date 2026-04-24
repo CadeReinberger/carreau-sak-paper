@@ -1,6 +1,7 @@
 import numpy as np
 from matplotlib import pyplot as plt
 from dataclasses import dataclass
+from functools import lru_cache
 from scipy.integrate import solve_bvp, solve_ivp
 
 
@@ -39,11 +40,18 @@ def make_pl_default_unstable_solution_data(alpha):
     
     
 ''' Next, the structures to actually just solve the problem '''
-    
+
+
+@lru_cache(maxsize=None)
+def _pl_warm_start(alpha):
+    """Power-law IVP solution cached per alpha, used as BVP warm start for large delta."""
+    sd = make_pl_default_unstable_solution_data(alpha)
+    return compute_power_law_ivp_soln(alpha, sd)
+
 
 def compute_carreau_bvp_soln(pd, sd):
-    #  Eventually, this will be beyond numerical reproach. 
-    if sd.is_stable: 
+    #  Eventually, this will be beyond numerical reproach.
+    if sd.is_stable:
         raise Exception('Fully Stable Solution is Not Yet Implemented. Please write some fucking matlab you fucking shit-for-brains.')
     alpha, delta, mu_inf = unpack(pd) # unpack and get the problem data
     # Make the BVP itself
@@ -55,18 +63,26 @@ def compute_carreau_bvp_soln(pd, sd):
         return np.array([ya[0], ya[1], yb[1]-1])
     # Make the Mesh to use as an initial guess
     L1 = sd.mesh_inner_length_ratio * sd.l
-    L2 = sd.l 
+    L2 = sd.l
     num1 = int(sd.init_nodes * sd.mesh_inner_density_fraction)
     num2 = int(sd.init_nodes * (1-sd.mesh_inner_density_fraction))
     small_delta = min(L1/(num1-1), (L2-L1)/(num2-1))
     x = np.hstack((np.linspace(0, L1, num=num1), np.linspace(L1+small_delta, L2, num=num2)))
-    # Fill the mesh with the first two asymptiotic terms of the Newtonian
-    guess_f = x-1.7
-    guess_fp = np.ones(x.shape)
-    guess_fpp = np.zeros(x.shape)
-    y = np.vstack((guess_f, guess_fp, guess_fpp))
+    if delta >= 1.0:
+        # For large delta the Carreau solution is close to power-law, so use it as
+        # warm start. The BVP still solves the full Carreau ODE — this just gives
+        # solve_bvp a much better starting point than the flat Newtonian guess.
+        x_pl, y_pl = _pl_warm_start(alpha)
+        y_init = np.zeros((3, len(x)))
+        for i in range(3):
+            y_init[i, :] = np.interp(x, x_pl, y_pl[i, :], right=y_pl[i, -1])
+    else:
+        # Near-Newtonian regime: flat guess works fine
+        y_init = np.vstack((x - 1.7, np.ones(x.shape), np.zeros(x.shape)))
     # solve that thing
-    bvp_soln = solve_bvp(f, bc, x, y, tol=sd.tol, max_nodes=sd.max_nodes)
+    bvp_soln = solve_bvp(f, bc, x, y_init, tol=sd.tol, max_nodes=sd.max_nodes)
+    if not bvp_soln.success:
+        raise RuntimeError(f"Carreau BVP failed (delta={pd.delta:.3g}): {bvp_soln.message}")
     return (bvp_soln.x, bvp_soln.y)
 
 def compute_carreau_kappa_default(pd):
