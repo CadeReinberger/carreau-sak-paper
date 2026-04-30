@@ -49,41 +49,118 @@ def _pl_warm_start(alpha):
     return compute_power_law_ivp_soln(alpha, sd)
 
 
+def _carreau_bc(ya, yb):
+    return np.array([ya[0], ya[1], yb[1] - 1])
+
+
+def _carreau_mesh(sd):
+    L1 = sd.mesh_inner_length_ratio * sd.l
+    L2 = sd.l
+    num1 = int(sd.init_nodes * sd.mesh_inner_density_fraction)
+    num2 = int(sd.init_nodes * (1 - sd.mesh_inner_density_fraction))
+    eps = min(L1 / (num1 - 1), (L2 - L1) / (num2 - 1))
+    return np.hstack((np.linspace(0, L1, num=num1),
+                      np.linspace(L1 + eps, L2, num=num2)))
+
+
+def _interp_onto(x_new, x_old, y_old):
+    out = np.zeros((y_old.shape[0], len(x_new)))
+    for i in range(y_old.shape[0]):
+        out[i] = np.interp(x_new, x_old, y_old[i], right=y_old[i, -1])
+    return out
+
+
+# Shared cache: (alpha, delta, mu_inf) → (x, y).  Used both for the backbone
+# and for every regular solve so the backbone solutions are reused across calls.
+_carreau_bvp_cache = {}
+
+# Step ratio for the backbone ladder (powers of _BACKBONE_STEP starting at 1).
+_BACKBONE_STEP = 5.0
+
+
+def _backbone_floor(delta):
+    """Largest backbone delta (power of _BACKBONE_STEP, >= 1) that does not exceed delta."""
+    d = 1.0
+    while d * _BACKBONE_STEP <= delta:
+        d *= _BACKBONE_STEP
+    return d
+
+
+def _ensure_backbone(alpha, mu_inf, delta_max, sd):
+    """
+    Walk up the backbone ladder 1, 5, 25, … caching BVP solutions as we go.
+    Stops at the largest backbone delta that does not exceed delta_max.
+    Each step uses the previous backbone solution as warm start, so every
+    solve is a ≤5× continuation step.
+    """
+    x0 = _carreau_mesh(sd)
+    d = 1.0
+    x_prev, y_prev = None, None
+
+    while True:
+        key = (alpha, d, mu_inf)
+        if key not in _carreau_bvp_cache:
+            if x_prev is None:
+                x_pl, y_pl = _pl_warm_start(alpha)
+                y_init = _interp_onto(x0, x_pl, y_pl)
+            else:
+                y_init = _interp_onto(x0, x_prev, y_prev)
+
+            def f_bb(x, y, _d=d):
+                fv, fp, fpp = y[0], y[1], y[2]
+                fppp = -fv*fpp / (2*(mu_inf + (1-mu_inf)*(1+alpha*_d*fpp**2)*(1+_d*fpp**2)**(.5*(alpha-3))))
+                return np.vstack((fp, fpp, fppp))
+
+            sol = solve_bvp(f_bb, _carreau_bc, x0.copy(), y_init,
+                            tol=sd.tol, max_nodes=sd.max_nodes)
+            if not sol.success:
+                raise RuntimeError(
+                    f"Backbone BVP failed (alpha={alpha}, delta={d:.3g}): {sol.message}")
+            _carreau_bvp_cache[key] = (sol.x, sol.y)
+
+        x_prev, y_prev = _carreau_bvp_cache[key]
+
+        if d * _BACKBONE_STEP > delta_max:
+            break
+        d *= _BACKBONE_STEP
+
+
 def compute_carreau_bvp_soln(pd, sd):
     #  Eventually, this will be beyond numerical reproach.
     if sd.is_stable:
         raise Exception('Fully Stable Solution is Not Yet Implemented. Please write some fucking matlab you fucking shit-for-brains.')
-    alpha, delta, mu_inf = unpack(pd) # unpack and get the problem data
-    # Make the BVP itself
-    def f(x, y):
-        f, fp, fpp = y[0], y[1], y[2]
-        fppp = -f*fpp/(2*(mu_inf + (1-mu_inf)*(1+alpha*delta*fpp**2)*(1+delta*fpp**2)**(.5*(alpha-3)) ))
+    alpha, delta, mu_inf = unpack(pd)
+
+    cache_key = (alpha, delta, mu_inf)
+    if cache_key in _carreau_bvp_cache:
+        return _carreau_bvp_cache[cache_key]
+
+    def f_ode(x, y):
+        fv, fp, fpp = y[0], y[1], y[2]
+        fppp = -fv*fpp / (2*(mu_inf + (1-mu_inf)*(1+alpha*delta*fpp**2)*(1+delta*fpp**2)**(.5*(alpha-3))))
         return np.vstack((fp, fpp, fppp))
-    def bc(ya, yb):
-        return np.array([ya[0], ya[1], yb[1]-1])
-    # Make the Mesh to use as an initial guess
-    L1 = sd.mesh_inner_length_ratio * sd.l
-    L2 = sd.l
-    num1 = int(sd.init_nodes * sd.mesh_inner_density_fraction)
-    num2 = int(sd.init_nodes * (1-sd.mesh_inner_density_fraction))
-    small_delta = min(L1/(num1-1), (L2-L1)/(num2-1))
-    x = np.hstack((np.linspace(0, L1, num=num1), np.linspace(L1+small_delta, L2, num=num2)))
-    if delta >= 1.0:
-        # For large delta the Carreau solution is close to power-law, so use it as
-        # warm start. The BVP still solves the full Carreau ODE — this just gives
-        # solve_bvp a much better starting point than the flat Newtonian guess.
-        x_pl, y_pl = _pl_warm_start(alpha)
-        y_init = np.zeros((3, len(x)))
-        for i in range(3):
-            y_init[i, :] = np.interp(x, x_pl, y_pl[i, :], right=y_pl[i, -1])
-    else:
-        # Near-Newtonian regime: flat guess works fine
+
+    x = _carreau_mesh(sd)
+
+    if delta < 1.0:
         y_init = np.vstack((x - 1.7, np.ones(x.shape), np.zeros(x.shape)))
-    # solve that thing
-    bvp_soln = solve_bvp(f, bc, x, y_init, tol=sd.tol, max_nodes=sd.max_nodes)
-    if not bvp_soln.success:
-        raise RuntimeError(f"Carreau BVP failed (delta={pd.delta:.3g}): {bvp_soln.message}")
-    return (bvp_soln.x, bvp_soln.y)
+    elif delta < _BACKBONE_STEP:
+        x_pl, y_pl = _pl_warm_start(alpha)
+        y_init = _interp_onto(x, x_pl, y_pl)
+    else:
+        # Build the backbone up to the floor of delta, then warm-start from there.
+        _ensure_backbone(alpha, mu_inf, delta, sd)
+        d_floor = _backbone_floor(delta)
+        x_bb, y_bb = _carreau_bvp_cache[(alpha, d_floor, mu_inf)]
+        y_init = _interp_onto(x, x_bb, y_bb)
+
+    sol = solve_bvp(f_ode, _carreau_bc, x, y_init, tol=sd.tol, max_nodes=sd.max_nodes)
+    if not sol.success:
+        raise RuntimeError(f"Carreau BVP failed (delta={delta:.3g}): {sol.message}")
+
+    result = (sol.x, sol.y)
+    _carreau_bvp_cache[cache_key] = result
+    return result
 
 def compute_carreau_kappa_default(pd):
     sd = make_carreau_default_unstable_solution_data()
