@@ -31,9 +31,9 @@ def plot_fig7():
     alphas = np.linspace(.3, 1.4, num=15)
 
     print('Computing Sakiadis c(alpha)...')
-    cs_sak = -np.array([compute_c(alpha, ez_sak) for alpha in tqdm(alphas)])
+    cs_sak = np.array([compute_c(alpha, ez_sak) for alpha in tqdm(alphas)])
     print('Computing Blasius c(alpha)...')
-    cs_blas = -np.array([compute_c(alpha, ez_blas) for alpha in tqdm(alphas)])
+    cs_blas = np.array([compute_c(alpha, ez_blas) for alpha in tqdm(alphas)])
 
     alphas = list(alphas)
     cs_sak = list(cs_sak)

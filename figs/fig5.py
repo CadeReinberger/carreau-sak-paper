@@ -10,11 +10,11 @@ kappa_blas = [ez_numerics_blas.compute_pl_kappa_default(alpha) for alpha in tqdm
 
 plt.rcParams.update({'font.size': 14})
 
-plt.plot(alphas, kappa_sak, 'c', label='Sakiadis')
-plt.plot(alphas, kappa_blas, 'm', label='Blasius')
-plt.xlabel(r'$\alpha$', fontsize=15)
-plt.ylabel(r"$|f_p''(0;\,\alpha)|$", fontsize=15)
-plt.legend(fontsize=13)
+plt.plot(alphas, kappa_sak, 'c', label=r'$-\kappa_p$, Sakiadis')
+plt.plot(alphas, kappa_blas, 'm', label=r'$\kappa_p$, Blasius')
+plt.xlabel(r'$\alpha$', fontsize=30)
+# plt.ylabel(r"$\kappa_p$", fontsize=15)
+plt.legend(fontsize=14)
 plt.tight_layout()
-plt.savefig('fig5.png', dpi=250)
+plt.savefig('fig5.eps', format='eps')
 

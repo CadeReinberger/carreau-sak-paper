@@ -180,19 +180,19 @@ def plot_shear_row():
                     markeredgewidth=0.8,
                     zorder=7,
                 )
-                x_off = -8 if i_de == 0 else 8
+                x_off = -8 if i_de == 0 else -8
                 ax.annotate(
                     pt_label, xy=(Re_pt, tau_pt),
                     fontsize=9, ha="center",
-                    xytext=(x_off, y_sign * 12), textcoords="offset points",
+                    xytext=(x_off, y_sign * 15), textcoords="offset points",
                 )
 
         all_tau_flat = np.concatenate(all_tau)
         ax.set_xlim(re_grid[0], re_grid[-1])
-        ax.set_ylim(np.min(all_tau_flat) / 1.3, np.max(all_tau_flat) * 1.3)
+        ax.set_ylim(np.min(all_tau_flat) * 1.3, np.max(all_tau_flat) / 1.3)
 
         ax.set_xlabel(r"$Re_x$")
-        ax.set_ylabel(r"$\tau$" if ax is axes[0] else "")
+        ax.set_ylabel(r"$\bar{\tau}_i$" if ax is axes[0] else "")
         ax.set_title(fr"$\alpha={alpha}$")
         ax.grid(True, which="both", alpha=0.25)
         ax.legend(loc="best")
