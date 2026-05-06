@@ -331,8 +331,8 @@ def compute_c(alpha):
 
 def plot_c():
     from pathlib import Path
-    alphas = np.linspace(.3, 1, num=15)
-    cs = .7 * np.array([compute_c(alpha) for alpha in tqdm(alphas)])
+    alphas = np.linspace(.3, 1.4, num=15)
+    cs = -np.array([compute_c(alpha) for alpha in tqdm(alphas)])
     alphas, cs = list(alphas), list(cs)
     del(alphas[4])
     del(cs[4])

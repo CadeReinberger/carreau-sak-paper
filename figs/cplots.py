@@ -156,6 +156,10 @@ def plot_shear_row():
             # Carreau drawn below other curves (zorder=1)
             ax.loglog(re_grid, tau_vals, color="black", linestyle="-", zorder=1, label=lbl_c)
             all_tau.extend([tau_pl, tau_vals])
+            if alpha < 1:
+                ax.text(re_grid[2], tau_vals[2] / 1.8, fr"$De={De:g}$",
+                        fontsize=9, color="red", ha="left", va="top",
+                        bbox=dict(facecolor="white", alpha=0.6, edgecolor="none", pad=1))
 
             # Point labels: below markers for alpha<1, above for alpha>1
             y_sign = -1 if alpha < 1 else 1
@@ -216,9 +220,9 @@ def plot_profile_grid():
             eta_n, ux_n = curves["newtonian"]
             eta_c, ux_c = curves["carreau"]
 
+            ax.plot(eta_c, ux_c, color="black", linestyle="-", label="Carreau")
             ax.plot(eta_n, ux_n, color="c", linestyle="--", label="Newtonian")
             ax.plot(eta_pl, ux_pl, color="r", linestyle="-.", label="Power law")
-            ax.plot(eta_c, ux_c, color="black", linestyle="-", label="Carreau")
 
             ax.set_xlim(-0.25, ETA_MAX + 0.25)
             ax.set_ylim(-0.02, 1.03)
@@ -232,7 +236,7 @@ def plot_profile_grid():
             ax.set_title(fr"$\alpha = {alpha},\quad \delta/\delta_* = {mult:g}$", fontsize=20)
 
             letter = _mult_to_letter[mult]
-            pt_label = f"{letter}{subplot_idx}/{letter}{subplot_idx}'"
+            pt_label = f"{letter}{subplot_idx}" if subplot_idx == 2 else f"{letter}{subplot_idx}/{letter}{subplot_idx}'"
             ax.plot([0.72], [0.5], marker="o",
                     markerfacecolor=DELTA_COLORS[mult],
                     markeredgecolor="black", markeredgewidth=0.8,
