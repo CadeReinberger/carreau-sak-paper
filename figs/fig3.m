@@ -5,7 +5,7 @@ alpha = .3;
 L = 100; 
 kappas = -linspace(.5, .64, 80);
 
-Lplt = 10;
+Lplt = 50;
 
 % Define most of the ODE
 diff = @(t, y) [y(2); y(3); y(1)*((-y(3))^(2-alpha))/(alpha*(alpha+1))];
@@ -60,5 +60,6 @@ end
 
 xlim([0 Lplt]);
 
-title(['Shooting Plot for alpha = ' num2str(alpha)])
+xlabel('$\eta$', 'Interpreter', 'latex')
+ylabel('$f_p$', 'Interpreter', 'latex')
 saveas(gcf, 'fig3.png')

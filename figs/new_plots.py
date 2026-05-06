@@ -15,7 +15,7 @@ ALPHAS = [0.3, 0.8, 1.4]
 DES = {
     0.3: np.logspace(1, 5, num=5),
     0.8: np.logspace(1, 5, num=5),
-    1.4: np.logspace(1, 5, num=5),
+    1.4: np.array([100.0]),
 }
 
 # Re_x range and resolution for shear curves
@@ -28,7 +28,7 @@ DELTA_LABELS = [r'$\delta = 0.01\,\delta_*$',
                 r'$\delta = \delta_*$',
                 r'$\delta = 10\,\delta_*$']
 # One color per delta fraction — consistent across both figures
-DELTA_COLORS = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728']
+DELTA_COLORS = ['cyan', '#ff7f0e', '#2ca02c', '#d62728']
 
 KAPPA_N = 0.4437483133688610511198328438501
 DPI     = 200
@@ -77,7 +77,8 @@ for alpha in ALPHAS:
             arr[i] = kc * Re**-.5 * (1 + kc**2 * De**2 / Re)**(.5*(alpha - 1))
         shear_tau[(alpha, De)] = arr
 
-tau_n_shear = KAPPA_N * RES**-.5   # Newtonian shear (same for all alpha)
+tau_n_shear  = KAPPA_N * RES**-.5   # Newtonian shear (same for all alpha)
+tau_pl_shear = {a: kappa_p_cache[a]**a * RES**(-1.0/(1+a)) for a in ALPHAS}
 
 
 # ── Step 4: Figure 1 — shear plot (1×3) ──────────────────────────────────────
@@ -97,16 +98,21 @@ for (col_idx, alpha) in enumerate(ALPHAS):
                  for i in range(len(des))]
 
     # Newtonian
-    ax.loglog(RES, tau_n_shear, 'k-', linewidth=LW, label='Newtonian')
+    ax.loglog(RES, tau_n_shear, 'c--', linewidth=LW, label='Newtonian')
 
-    # Carreau curves
+    # Power-law
+    ax.loglog(RES, tau_pl_shear[alpha], 'r-.', linewidth=LW, label='Power law')
+
+    # Carreau curves (no De legend entries)
     for (j, De) in enumerate(des):
         ax.loglog(RES, shear_tau[(alpha, De)], '-',
                   color=de_colors[j], linewidth=LW,
-                  label=f'$De = {De:.0f}$')
+                  label='_nolegend_')
 
     # Points corresponding to each velocity-profile delta value
     # For fixed delta: Re_x = De^2/delta, tau = kc * Re_x^(-1/2) * (1+kc^2*delta)^((alpha-1)/2)
+    all_re_pts  = []
+    all_tau_pts = []
     for (frac, dlabel, dcol) in zip(DELTA_FRACS, DELTA_LABELS, DELTA_COLORS):
         delta  = frac * ds
         kc     = profile_kc[(alpha, frac)]
@@ -120,6 +126,12 @@ for (col_idx, alpha) in enumerate(ALPHAS):
                   color=dcol, markersize=10,
                   markeredgecolor='k', markeredgewidth=0.7,
                   label=dlabel, zorder=6)
+        all_re_pts.extend(Re_pts)
+        all_tau_pts.extend(tau_pts)
+
+    if alpha == 1.4:
+        ax.set_xlim(min(all_re_pts) / 100, max(all_re_pts) * 100)
+        ax.set_ylim(min(all_tau_pts) / 100, max(all_tau_pts) * 100)
 
     ax.set_xlabel(r'$Re_x$', fontsize=FS + 1)
     ax.set_ylabel(r'$\bar{\tau}_w$', fontsize=FS + 1)

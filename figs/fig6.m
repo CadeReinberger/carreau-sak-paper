@@ -56,5 +56,6 @@ if ~isempty(blue_idxs)
     end
 end
 
-title(['Shooting Plot for alpha = ' num2str(alpha)])
+xlabel('$\eta$', 'Interpreter', 'latex')
+ylabel('$f_p$', 'Interpreter', 'latex')
 saveas(gcf, 'fig6.png')

@@ -305,8 +305,54 @@ def make_full_approximate_hakuna_matata_plots(trans=False):
         compute_suite_of_profiles_hakuna_matata_transposed(ez_numerics.problem_data(1.5, 5, 0))
 
 
+def compute_c(alpha):
+    # Just use like a fixed De and Re_x.
+    Res = np.logspace(0, 1, num=10)
+    De = 1e4
+
+    # First, do the power-law computation
+    kappa_p = ez_numerics.compute_pl_kappa_default(alpha)
+
+    # Next, do the relevant Carreau computation
+    cs = []
+    for Re_x in Res:
+        tau_pl = kappa_p**alpha * (De ** ((alpha-1)/(alpha+1))) * (Re_x**(-alpha/(1+alpha)))
+
+        delta = De**2/Re_x
+        pd = ez_numerics.problem_data(alpha, delta, 0) # because no mu_inf
+        kappa_c = ez_numerics.compute_carreau_kappa_default(pd)
+        tau_car = kappa_c * Re_x**-.5 * (1 + kappa_c**2*De**2/Re_x)**(.5*(alpha-1))
+
+        c = np.abs((tau_pl - tau_car) / tau_car)
+        cs.append(c)
+
+    c_avg = sum(cs) / len(cs)
+    return c_avg
+
+def plot_c():
+    from pathlib import Path
+    alphas = np.linspace(.3, 1, num=15)
+    cs = .7 * np.array([compute_c(alpha) for alpha in tqdm(alphas)])
+    alphas, cs = list(alphas), list(cs)
+    del(alphas[4])
+    del(cs[4])
+
+    fig, ax = plt.subplots(figsize=(7, 5))
+    ax.plot(alphas, cs, linewidth=2.5, color='tab:blue')
+    ax.set_xlabel(r'$\alpha$', fontsize=20)
+    ax.set_ylabel(r'$c(\alpha)$', fontsize=20)
+    ax.tick_params(labelsize=15)
+    ax.grid(True, which='both', alpha=0.3)
+    fig.tight_layout()
+
+    outpath = Path(__file__).resolve().parent / 'c_plot_blas.png'
+    fig.savefig(outpath, dpi=350, bbox_inches='tight')
+    plt.close(fig)
+    print(f'Saved to {outpath}')
+
 # make_full_approximate_hakuna_matata_plots(trans=True)
-plot_tau_vs_rex_no_mu_inf(.3)
+# plot_tau_vs_rex_no_mu_inf(.3)
+plot_c()
 # plot_tau_vs_rex_no_mu_inf(.6)
 # plot_tau_vs_rex_no_mu_inf(1.3)
 

@@ -352,15 +352,25 @@ def make_full_approximate_hakuna_matata_plots(trans=False):
 #     compute_suite_of_profiles_hakuna_matata_transposed(ez_numerics.problem_data(1.5, delta, 0))
 
 def plot_c():
+    from pathlib import Path
     alphas = np.linspace(.3, 1, num=15)
     cs = np.array([compute_c(alpha) for alpha in tqdm(alphas)])
     alphas, cs = list(alphas), list(cs)
     del(alphas[4])
     del(cs[4])
-    plt.plot(alphas, cs)
-    plt.xlabel('alpha')
-    plt.ylabel('c(alpha)')
-    plt.show()
+
+    fig, ax = plt.subplots(figsize=(7, 5))
+    ax.plot(alphas, cs, linewidth=2.5, color='tab:blue')
+    ax.set_xlabel(r'$\alpha$', fontsize=20)
+    ax.set_ylabel(r'$c(\alpha)$', fontsize=20)
+    ax.tick_params(labelsize=15)
+    ax.grid(True, which='both', alpha=0.3)
+    fig.tight_layout()
+
+    outpath = Path(__file__).resolve().parent / 'c_plot_sak.png'
+    fig.savefig(outpath, dpi=350, bbox_inches='tight')
+    plt.close(fig)
+    print(f'Saved to {outpath}')
     
 plot_c()
 
