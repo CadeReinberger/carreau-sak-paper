@@ -3,7 +3,7 @@ figure()
 % So, first we fix an alpha
 alpha = 1.4; 
 L = 10; 
-kappas = -linspace(.4, .5, 100);
+kappas = -linspace(.4, .5, 40);
 
 % Define most of the ODE
 diff = @(t, y) [y(2); y(3); y(1)*((-y(3))^(2-alpha))/(alpha*(alpha+1))];
@@ -32,7 +32,7 @@ for idx = 1:n_kappas
     all_t{idx} = t;
     all_y1{idx} = y(:,1);
     % Plot the result
-    plot(t, y(:,1), 'Color', col, 'DisplayName', num2str(kappa)); hold on
+    plot(t, y(:,1), 'Color', col, 'DisplayName', num2str(kappa), 'LineWidth', 1); hold on
     % if ~isempty(pks)
     %     plot(locs(1), pks(1), 'm*')
     % end
@@ -56,6 +56,8 @@ if ~isempty(blue_idxs)
     end
 end
 
+ylim([0 3.2]);
+
 xlabel('$\eta$', 'Interpreter', 'latex')
 ylabel('$f_p$', 'Interpreter', 'latex')
-saveas(gcf, 'fig6.png')
+saveas(gcf, 'fig6.eps')
