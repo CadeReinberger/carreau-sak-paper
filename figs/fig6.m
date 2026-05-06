@@ -60,4 +60,5 @@ ylim([0 3.2]);
 
 xlabel('$\eta$', 'Interpreter', 'latex')
 ylabel('$f_p$', 'Interpreter', 'latex')
-saveas(gcf, 'fig6.eps')
+savefig('fig6.fig')
+%saveas(gcf, 'fig6.eps')
