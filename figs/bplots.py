@@ -246,8 +246,9 @@ def plot_profile_grid():
             if i == 0 and j == 0:
                 ax.legend(loc="best")
 
-    outpath = OUTPUT_DIR / "new_profiles.png"
-    fig.savefig(outpath, dpi=350, bbox_inches="tight")
+    outpath = OUTPUT_DIR / "new_profiles.eps"
+    fig.savefig(outpath, format='eps', bbox_inches='tight')
+    # fig.savefig(outpath, dpi=350, bbox_inches="tight")
     plt.close(fig)
     return outpath
 
