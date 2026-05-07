@@ -1,0 +1,116 @@
+\begin{thebibliography}{20}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+\def\au#1{#1} \def\ed#1{#1} \def\yr#1{#1}\def\at#1{#1}\def\jt#1{\textit{#1}}
+  \def\bt#1{#1}\def\bvol#1{\textbf{#1}} \def\vol#1{#1} \def\pg#1{#1}
+  \def\publ#1{#1}\def\arxiv#1{#1}\def\org#1{#1}\def\st#1{\textit{#1}}
+
+\bibitem[Acrivos {\em et~al.\/}(1960)Acrivos, Shah \& Petersen]{Acrivos1960}
+{\sc \au{Acrivos, Andreas}, \au{Shah, M.~J.} \& \au{Petersen, E.~E.}} \yr{1960}
+   \at{Momentum and heat transfer in laminar boundary-layer flows of
+  non-newtonian fluids past external surfaces}.  \jt{AIChE Journal}
+  \bvol{6}~(2),  \pg{312--317},  \arxiv{arXiv:
+  https://aiche.onlinelibrary.wiley.com/doi/pdf/10.1002/aic.690060227}.
+
+\bibitem[Andersson \& Aarseth(2007)]{And2007}
+{\sc \au{Andersson, H.~I.} \& \au{Aarseth, J.~B.}} \yr{2007}  \at{Sakiadis flow
+  with variable fluid properties revisited}.  \jt{Int. J. Engng Sci.}
+  \bvol{45},  \pg{554--561}.
+
+\bibitem[Barlow {\em et~al.\/}(2017)Barlow, Stanton, Hill, Weinstein \&
+  Cio]{GenMeth}
+{\sc \au{Barlow, N.~S.}, \au{Stanton, C.~R.}, \au{Hill, N.}, \au{Weinstein,
+  S.~J.} \& \au{Cio, A.~G.}} \yr{2017}  \at{On the summation of divergent,
+  truncated, and underspecified power series via asymptotic approximants}.
+  \jt{The Quarterly Journal of Mechanics and Applied Mathematics}  \pg{p.
+  hbw014}.
+
+\bibitem[Bataller(2010)]{Cortell}
+{\sc \au{Bataller, C.~R.}} \yr{2010}  \at{Numerical comparisons of {B}lasius
+  and {S}akiadis flows}.  \jt{MATEMATIKA}  \bvol{26}~(2),  \pg{187--196}.
+
+\bibitem[Bender \& Orszag(1978)]{Bender}
+{\sc \au{Bender, C.~M.} \& \au{Orszag, S.~A.}} \yr{1978} {\em Advanced
+  Mathematical Methods for Scientists and Engineers I: Asymptotic Methods and
+  Perturbation Theory\/}.  \publ{McGraw-Hill}.
+
+\bibitem[Blake {\em et~al.\/}(1994)Blake, Clarke \& Ruschak]{TDBlake1994}
+{\sc \au{Blake, Terence~D.}, \au{Clarke, Andrew} \& \au{Ruschak, Kenneth~J.}}
+  \yr{1994}  \at{Hydrodynamic assist of dynamic wetting}.  \jt{AIChE Journal}
+  \bvol{40}~(2),  \pg{229--242},  \arxiv{arXiv:
+  https://aiche.onlinelibrary.wiley.com/doi/pdf/10.1002/aic.690400205}.
+
+\bibitem[Blasius(1908)]{Blasius}
+{\sc \au{Blasius, H.}} \yr{1908}  \at{Grenzschichten in flussigkeiten mit
+  kleiner reibung}.  \jt{Zeitschrift fur Mathematik und Physik}  \bvol{56},
+  \pg{1--37}.
+
+\bibitem[Denier \& Dabrowski(2004)]{Dabrowski}
+{\sc \au{Denier, James~P} \& \au{Dabrowski, Paul~P}} \yr{2004}  \at{On the
+  boundary--layer equations for power--law fluids}.  \jt{Proc. Math. Phys. Eng.
+  Sci.}  \bvol{460}~(2051),  \pg{3143--3158}.
+
+\bibitem[Fox {\em et~al.\/}(1969)Fox, Erickson \& Fan]{Fox}
+{\sc \au{Fox, V.~G.}, \au{Erickson, T. L.~E.} \& \au{Fan, L.~T}} \yr{1969}
+  \at{The laminar boundary layer on a moving continuous flat sheet immersed in
+  a non-newtonian fluid}.  \jt{AlChE Journal}  \bvol{15},  \pg{327--333}.
+
+\bibitem[Griffiths {\em et~al.\/}(2016)Griffiths, Gallagher \&
+  Stephen]{Griffiths}
+{\sc \au{Griffiths, P.~T.}, \au{Gallagher, M.~T.} \& \au{Stephen, S.~O.}}
+  \yr{2016}  \at{The effect of non-newtonian viscosity on the stability of the
+  blasius boundary layer}.  \jt{Physics of Fluids}  \bvol{28}~(7),
+  \pg{074107}.
+
+\bibitem[Naghshineh {\em et~al.\/}(2023)Naghshineh, Barlow, Samaha \&
+  Weinstein]{NonNewtonian}
+{\sc \au{Naghshineh, N.}, \au{Barlow, N.~S.}, \au{Samaha, M.~A.} \&
+  \au{Weinstein, S.~J.}} \yr{2023}  \at{{Asymptotically consistent analytical
+  solutions for the non-Newtonian Sakiadis boundary layer}}.  \jt{Physics of
+  Fluids}  \bvol{35}~(053103),  \pg{1--15}.
+
+\bibitem[Pantokratoras(2004)]{Pant2004}
+{\sc \au{Pantokratoras, A.}} \yr{2004}  \at{Further results on the variable
+  viscosity on flow and heat transfer to a continuous moving flat plate}.
+  \jt{Int. J. Engng Sci.}  \bvol{42},  \pg{1891--1896}.
+
+\bibitem[Pantokratoras(2015)]{PANTOKRATORAS}
+{\sc \au{Pantokratoras, Asterios}} \yr{2015}  \at{Non-similar blasius and
+  sakiadis flow of a non-newtonian carreau fluid}.  \jt{Journal of the Taiwan
+  Institute of Chemical Engineers}  \bvol{56},  \pg{1--5}.
+
+\bibitem[Pavlov {\em et~al.\/}(1982)Pavlov, Fedotov \&
+  Shakhorin]{Pavlov1982-qh}
+{\sc \au{Pavlov, K~B}, \au{Fedotov, I~A} \& \au{Shakhorin, A~P}} \yr{1982}
+  \at{Structure of laminar boundary layer in non-newtonian dilatant fluids}.
+  \jt{Fluid Dyn.}  \bvol{16}~(4),  \pg{605--608}.
+
+\bibitem[Sakiadis(1961)]{Sakiadis1961a}
+{\sc \au{Sakiadis, B.~C.}} \yr{1961}  \at{Boundary-layer behavior on continuous
+  solid surfaces: I.\ boundary-layer equations for two-dimensional and
+  axisymmetric flow}.  \jt{AIChE J.}  \bvol{7},  \pg{26--28}.
+
+\bibitem[Schlichting(1979)]{Schlichting}
+{\sc \au{Schlichting, H.}} \yr{1979} {\em Boundary-Layer Theory\/}, 7th edn.
+  \publ{New York, USA: McGraw-Hill}.
+
+\bibitem[Takhar {\em et~al.\/}(1991)Takhar, Nitu \& Pop]{Takhar1991}
+{\sc \au{Takhar, H.~S.}, \au{Nitu, S.} \& \au{Pop, I.}} \yr{1991}  \at{Boundary
+  layer flow due to a moving plate: variable fluid properties}.  \jt{Acta
+  Mech.}  \bvol{90},  \pg{37--42}.
+
+\bibitem[Weinstein \& Ruschak(2004{\natexlab{{\em a\/}}})]{Weinstein2004}
+{\sc \au{Weinstein, S.~J.} \& \au{Ruschak, K.~J.}} \yr{2004{\natexlab{{\em
+  a\/}}}}  \at{Coating flows}.  \jt{Ann. Rev. Fluid Mech.}  \bvol{36},
+  \pg{29--53}.
+
+\bibitem[Weinstein \& Ruschak(2004{\natexlab{{\em b\/}}})]{CoatingFlows}
+{\sc \au{Weinstein, Steven~J.} \& \au{Ruschak, Kenneth~J.}}
+  \yr{2004{\natexlab{{\em b\/}}}}  \at{Coating flows}.  \jt{Annual Review of
+  Fluid Mechanics}  \bvol{36}~(Volume 36, 2004),  \pg{29--53}.
+
+\bibitem[Zhizhin \& Ufimtsev(1978)]{Zhizhin1978-us}
+{\sc \au{Zhizhin, G~V} \& \au{Ufimtsev, A~A}} \yr{1978}  \at{Flow in the plane
+  laminar boundary layer of dilatant liquids}.  \jt{Fluid Dyn.}  \bvol{12}~(5),
+   \pg{780--784}.
+
+\end{thebibliography}
