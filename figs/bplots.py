@@ -134,6 +134,8 @@ def plot_shear_row():
     fig, axes = plt.subplots(1, 2, figsize=(14, 6), constrained_layout=True)
     _mult_to_letter = {10.0: "A", 1.0: "B", 0.1: "C"}
 
+    # plt.rcParams['mathtext.fontset'] = 'cm'
+
     for subplot_idx, (ax, alpha) in enumerate(zip(axes, ALPHAS), start=1):
         de_values = np.asarray(DE_VALUES_BY_ALPHA[alpha], dtype=float)
         delta_star = compute_delta_star(alpha)
@@ -197,8 +199,8 @@ def plot_shear_row():
         ax.grid(True, which="both", alpha=0.25)
         ax.legend(loc="best")
 
-    outpath = OUTPUT_DIR / "new_shear.png"
-    fig.savefig(outpath, dpi=350, bbox_inches="tight")
+    outpath = OUTPUT_DIR / "new_shear_blas.eps"
+    fig.savefig(outpath, format='eps', bbox_inches="tight")
     plt.close(fig)
     return outpath
 
@@ -246,7 +248,7 @@ def plot_profile_grid():
             if i == 0 and j == 0:
                 ax.legend(loc="best")
 
-    outpath = OUTPUT_DIR / "new_profiles.eps"
+    outpath = OUTPUT_DIR / "new_profiles_blas.eps"
     fig.savefig(outpath, format='eps', bbox_inches='tight')
     # fig.savefig(outpath, dpi=350, bbox_inches="tight")
     plt.close(fig)
