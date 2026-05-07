@@ -1,5 +1,8 @@
 import numpy as np
+import matplotlib
+matplotlib.use('ps')
 from matplotlib import pyplot as plt
+import matplotlib.transforms as mtransforms
 from functools import lru_cache
 from pathlib import Path
 
@@ -30,6 +33,7 @@ plt.rcParams.update({
     "axes.labelsize": 16,
     "axes.titlesize": 16,
     "legend.fontsize": 12,
+    "legend.framealpha": 1.0,
     "xtick.labelsize": 13,
     "ytick.labelsize": 13,
     "lines.linewidth": 2.6,
@@ -131,7 +135,7 @@ def build_profile_curves(alpha, delta, mu_inf=0.0):
 
 
 def plot_shear_row():
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6), constrained_layout=True)
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
     _mult_to_letter = {10.0: "A", 1.0: "B", 0.1: "C"}
 
     # plt.rcParams['mathtext.fontset'] = 'cm'
@@ -161,7 +165,7 @@ def plot_shear_row():
             if alpha < 1:
                 ax.text(re_grid[2], tau_vals[2] / 1.8, fr"$De={De:g}$",
                         fontsize=9, color="red", ha="left", va="top",
-                        bbox=dict(facecolor="white", alpha=0.6, edgecolor="none", pad=1))
+                        bbox=dict(facecolor="white", edgecolor="white", pad=1))
 
             # Point labels: below markers for alpha<1, above for alpha>1
             y_sign = -1 if alpha < 1 else 1
@@ -183,11 +187,8 @@ def plot_shear_row():
                     zorder=7,
                 )
                 x_off = -8 if i_de == 0 else -8
-                ax.annotate(
-                    pt_label, xy=(Re_pt, tau_pt),
-                    fontsize=9, ha="center",
-                    xytext=(x_off, y_sign * 15), textcoords="offset points",
-                )
+                trans = mtransforms.offset_copy(ax.transData, fig=fig, x=x_off, y=y_sign * 15, units='points')
+                ax.text(Re_pt, tau_pt, pt_label, transform=trans, fontsize=9, ha="center")
 
         all_tau_flat = np.concatenate(all_tau)
         ax.set_xlim(re_grid[0], re_grid[-1])
@@ -196,18 +197,18 @@ def plot_shear_row():
         ax.set_xlabel(r"$Re_x$")
         ax.set_ylabel(r"$\bar{\tau}_i$" if ax is axes[0] else "")
         ax.set_title(fr"$\alpha={alpha}$")
-        ax.grid(True, which="both", alpha=0.25)
         ax.legend(loc="best")
 
+    fig.tight_layout()
     outpath = OUTPUT_DIR / "new_shear_blas.eps"
-    fig.savefig(outpath, format='eps', bbox_inches="tight")
+    fig.savefig(outpath, format='eps')
     plt.close(fig)
     return outpath
 
 
 
 def plot_profile_grid():
-    fig, axes = plt.subplots(2, 3, figsize=(16, 11), sharex=False, sharey=False, constrained_layout=True)
+    fig, axes = plt.subplots(2, 3, figsize=(16, 11), sharex=False, sharey=False)
     _mult_to_letter = {10.0: "A", 1.0: "B", 0.1: "C"}
 
     for i, alpha in enumerate(ALPHAS):
@@ -228,12 +229,11 @@ def plot_profile_grid():
 
             ax.set_xlim(-0.25, ETA_MAX + 0.25)
             ax.set_ylim(-0.02, 1.03)
-            ax.grid(True, alpha=0.25)
 
             if j == 0:
                 ax.set_ylabel(r"$\bar{u}_x$")
 
-            ax.set_title(fr"$\alpha = {alpha},\quad \delta/\delta_* = {mult:g}$", fontsize=20)
+            ax.set_title(fr"$\alpha = {alpha},\quad \delta/\delta^* = {mult:g}$", fontsize=20)
 
             letter = _mult_to_letter[mult]
             pt_label = f"{letter}{subplot_idx}" if subplot_idx == 2 else f"{letter}{subplot_idx}/{letter}{subplot_idx}'"
@@ -248,8 +248,9 @@ def plot_profile_grid():
             if i == 0 and j == 0:
                 ax.legend(loc="best")
 
+    fig.tight_layout()
     outpath = OUTPUT_DIR / "new_profiles_blas.eps"
-    fig.savefig(outpath, format='eps', bbox_inches='tight')
+    fig.savefig(outpath, format='eps')
     # fig.savefig(outpath, dpi=350, bbox_inches="tight")
     plt.close(fig)
     return outpath

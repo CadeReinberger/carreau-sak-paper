@@ -19,7 +19,7 @@ def plot_tau_vs_rex_no_mu_inf(alpha):
     kappa_n = 0.4437483133688610511198328438501
     tau_n = kappa_n * Res**-.5
     
-    plt.loglog(Res, tau_n, 'k-', label='Newtonian')
+    # plt.loglog(Res, tau_n, 'k-', label='Newtonian')
     
     # Next, precompute the power-law shear
     kappa_p = ez_numerics.compute_pl_kappa_default(alpha)
@@ -47,16 +47,16 @@ def plot_tau_vs_rex_no_mu_inf(alpha):
             tau_car[ind] = tau
         
         # Finally add it to the plot
-        plt.semilogx(Res, tau_pl, 'c--', label=f'PL De={De}')
-        plt.semilogx(Res, tau_car, 'm-.', label=f'Carreau De={De}')
-        # plt.semilogx(Res, np.abs((tau_pl-tau_car) / (tau_car)), '--', label=f'De={De}')
+        # plt.semilogx(Res, tau_pl, 'c--', label=f'PL De={De}')
+        # plt.semilogx(Res, tau_car, 'm-.', label=f'Carreau De={De}')
+        plt.loglog(Res, np.abs((tau_pl-tau_car) / (tau_car)), '--', label=f'De={De}')
         
-    plt.xlabel('Re_x')
-    plt.ylabel('Relative Error in Tau')
-    plt.title(f'Dimensionless Wall Shear for Carreau with alpha={alpha}')
+    plt.xlabel(r'$\operatorname{Re}_x$')
+    plt.ylabel(r'$|\tau_p - \tau_c|/\tau_c$')
+    # plt.title(f'Dimensionless Wall Shear for Carreau with alpha={alpha}')
     plt.legend(loc=(1.05, 0.25))
     # plt.ylim([0, 1])
-    plt.show()
+    plt.savefig('rel_err.eps', format='eps', bbox_inches='tight')
     
     
 def compute_c(alpha):
@@ -372,9 +372,9 @@ def plot_c():
     plt.close(fig)
     print(f'Saved to {outpath}')
     
-plot_c()
+# plot_c()
 
-
+plot_tau_vs_rex_no_mu_inf(.3)
 
 
 

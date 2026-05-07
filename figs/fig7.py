@@ -52,8 +52,8 @@ def plot_fig7():
     ax.legend(fontsize=14)
     fig.tight_layout()
 
-    outpath = Path(__file__).resolve().parent / 'fig7.png'
-    fig.savefig(outpath, dpi=350, bbox_inches='tight')
+    outpath = Path(__file__).resolve().parent / 'fig7.eps'
+    fig.savefig(outpath, format='eps', bbox_inches='tight')
     plt.close(fig)
     print(f'Saved to {outpath}')
 
