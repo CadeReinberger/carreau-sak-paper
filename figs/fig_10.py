@@ -44,16 +44,17 @@ def plot_fig7():
 
     fig, ax = plt.subplots(figsize=(7, 5))
     ax.plot(alphas, cs_sak, linewidth=2.5, color='cyan', label='Sakiadis', zorder=2)
-    ax.plot(alphas, cs_blas, linewidth=2.5, color='magenta', linestyle='-.', label='Blasius', zorder=3)
+    # ax.plot(alphas, cs_blas, linewidth=2.5, color='magenta', linestyle='-.', label='Blasius', zorder=3)
     ax.set_xlabel(r'$\alpha$', fontsize=20)
     ax.set_ylabel(r'$c(\alpha)$', fontsize=20)
     ax.tick_params(labelsize=15)
     ax.grid(True, which='both', alpha=0.3)
-    ax.legend(fontsize=14)
+    # ax.legend(fontsize=14)
     fig.tight_layout()
 
-    outpath = Path(__file__).resolve().parent / 'fig7.eps'
-    fig.savefig(outpath, format='eps', bbox_inches='tight')
+    outpath = Path(__file__).resolve().parent / 'fig7.png'
+    fig.savefig(outpath, dpi=300, bbox_inches='tight')
+    #fig.savefig(outpath, format='eps', bbox_inches='tight')
     plt.close(fig)
     print(f'Saved to {outpath}')
 

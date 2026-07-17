@@ -1,0 +1,504 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+
+% Talk slides for: On Self-Similar Viscosity Models for Carreau Boundary Layer Flows
+% Put this file in the same directory as the figures used by main.tex.
+% Figure filenames are intentionally kept identical to the manuscript source.
+
+\usetheme{Madrid}
+\usecolortheme{seahorse}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{caption}[numbered]
+
+\usepackage{amsmath,mathtools,bm,booktabs}
+\usepackage{graphicx}
+\usepackage{appendixnumberbeamer}
+
+\newcommand{\gd}{{\dot{\bm{\gamma}}}}
+\newcommand{\Reyn}{\operatorname{Re}}
+\newcommand{\De}{\operatorname{De}}
+\newcommand{\dd}{\mathrm{d}}
+
+% Compile-friendly figure macro: includes the manuscript figure if present;
+% otherwise leaves a labeled placeholder so the deck still compiles.
+\newcommand{\figinclude}[2][]{%
+  \IfFileExists{#2}{\includegraphics[#1]{#2}}{%
+    \fbox{\begin{minipage}[c][0.38\textheight][c]{0.82\linewidth}
+    \centering\small Missing figure file:\\[0.4em]\texttt{\detokenize{#2}}
+    \end{minipage}}%
+  }%
+}
+
+\title[Self-Similar Models for Carreau Boundary Layers]{On Self-Similar Viscosity Models for Carreau Boundary Layer Flows}
+\author[Reinberger, Barlow, Weinstein]{W. Cade Reinberger \and Nathaniel S. Barlow \and Steven J. Weinstein}
+\institute[RIT]{Rochester Institute of Technology}
+\date{}
+
+\begin{document}
+
+% 1
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% 2
+\begin{frame}{One-slide version}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.58\textwidth}
+\begin{itemize}
+  \item Boundary-layer flows have high shear near the wall/leading edge and low shear far from the wall/downstream.
+  \item Power-law and Newtonian models admit similarity solutions; Carreau rheology does not.
+  \item Main question: when do simple self-similar models accurately predict Carreau wall shear?
+  \item Main result: use power-law upstream, Newtonian downstream, with a computable transition criterion and quantified high-shear error.
+\end{itemize}
+\end{column}
+\begin{column}{0.38\textwidth}
+\centering
+\figinclude[width=\linewidth]{rheo_thin_cropped_rotated.pdf}\vspace{0.4em}
+\figinclude[width=\linewidth]{rheo_thick_cropped_rotated.pdf}
+\end{column}
+\end{columns}
+\end{frame}
+
+% 3
+\begin{frame}{Roadmap for a 20-minute talk}
+\begin{enumerate}
+  \item Boundary-layer setup and viscosity models.
+  \item Similarity reductions: power-law/Newtonian versus Carreau.
+  \item New Sakiadis power-law solutions outside the previously accepted range.
+  \item Wall-shear comparison and the transition parameter $\delta^*$.
+  \item Why the high-shear power-law approximation has a finite offset.
+\end{enumerate}
+\end{frame}
+
+% 4
+\begin{frame}{Why the power-law model is both useful and incomplete}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+\begin{block}{Power-law rheology}
+\[
+  \mu = K |\gd|^{\alpha-1}
+\]
+\begin{itemize}
+  \item $\alpha<1$: shear-thinning.
+  \item $\alpha>1$: shear-thickening.
+  \item Analytically convenient; often self-similar.
+\end{itemize}
+\end{block}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{alertblock}{Problem}
+\begin{itemize}
+  \item It has no low-shear Newtonian plateau.
+  \item In a boundary layer, low-shear and high-shear regions coexist in the same flow.
+  \item So the far-field velocity profile can be wrong even when wall shear looks close.
+\end{itemize}
+\end{alertblock}
+\end{column}
+\end{columns}
+\end{frame}
+
+% 5
+\begin{frame}{Carreau rheology: power-law behavior with Newtonian regularization}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+\[
+  \mu = \mu_0\left(1+(\lambda |\gd|)^2\right)^{(\alpha-1)/2}
+\]
+\vspace{-0.5em}
+\[
+  \mu \sim \mu_0 \quad (|\gd|\to 0),
+  \qquad
+  \mu \sim \mu_0\lambda^{\alpha-1}|\gd|^{\alpha-1}\quad(|\gd|\to\infty)
+\]
+\[
+  |\gd|_c=\frac{1}{\lambda},\qquad K=\mu_0\lambda^{\alpha-1}.
+\]
+\end{column}
+\begin{column}{0.48\textwidth}
+\centering
+\figinclude[width=0.94\linewidth]{rheo_thin_cropped_rotated.pdf}\vspace{0.2em}
+\figinclude[width=0.94\linewidth]{rheo_thick_cropped_rotated.pdf}
+\end{column}
+\end{columns}
+\end{frame}
+
+% 6
+\begin{frame}{Two canonical boundary layers}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.52\textwidth}
+\begin{itemize}
+  \item \textbf{Blasius:} stationary wall, moving fluid.
+  \item \textbf{Sakiadis:} moving wall, quiescent fluid.
+  \item They are not equivalent by a frame shift because the governing boundary-layer equation is nonlinear.
+\end{itemize}
+\vspace{0.5em}
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Location & Blasius & Sakiadis \\
+\midrule
+$y=0$ & $u_x=0$ & $u_x=U$ \\
+$y\to\infty$ & $u_x\to U$ & $u_x\to 0$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{column}
+\begin{column}{0.44\textwidth}
+\centering
+\figinclude[width=\linewidth]{schematics_pdf_cropped.pdf}
+\end{column}
+\end{columns}
+\end{frame}
+
+% 7
+\begin{frame}{Boundary-layer equations and comparison metric}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.52\textwidth}
+\begin{align*}
+  &\frac{\partial u_x}{\partial x}+\frac{\partial u_y}{\partial y}=0,\\
+  &\rho\left(u_x\frac{\partial u_x}{\partial x}+u_y\frac{\partial u_x}{\partial y}\right)
+    =\frac{\partial \tau_{yx}}{\partial y},\\
+  &\tau_{yx}=\mu(|\gd|)\frac{\partial u_x}{\partial y},
+  \qquad |\gd|=\left|\frac{\partial u_x}{\partial y}\right|.
+\end{align*}
+\end{column}
+\begin{column}{0.43\textwidth}
+\begin{block}{Metric}
+Wall shear / wall shear-rate is the central quantity:
+\[
+  \tau_i \quad (i=n,p,c).
+\]
+It is sensitive to the full boundary-value problem, but is still the most engineering-facing scalar output.
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+% 8
+\begin{frame}{Power-law and Newtonian models are self-similar}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.52\textwidth}
+\[
+  \eta = y\left(\frac{\rho U^{2-\alpha}}{Kx}\right)^{1/(\alpha+1)},
+  \qquad u_x=Uf_p'(\eta;\alpha).
+\]
+\[
+  \alpha(\alpha+1)f_p''' + f_p f_p''|f_p''|^{1-\alpha}=0.
+\]
+\end{column}
+\begin{column}{0.43\textwidth}
+\begin{block}{Boundary conditions}
+\textbf{Blasius:}
+\[
+ f_p(0)=0,\quad f_p'(0)=0,\quad f_p'(\infty)=1.
+\]
+\textbf{Sakiadis:}
+\[
+ f_p(0)=0,\quad f_p'(0)=1,\quad f_p'(\infty)=0.
+\]
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+% 9
+\begin{frame}{Carreau is not self-similar, but reduces to a one-parameter family}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.54\textwidth}
+Use the Newtonian similarity scaling:
+\[
+  f_c=\psi\sqrt{\frac{\rho}{\mu_0 xU}},
+  \qquad
+  \eta = y\sqrt{\frac{\rho U}{\mu_0 x}}.
+\]
+The remaining streamwise dependence enters through
+\[
+  \delta = \frac{\lambda^2U^3\rho}{\mu_0x}
+  =\frac{\De^2}{\Reyn_{n,x}}.
+\]
+\end{column}
+\begin{column}{0.43\textwidth}
+\[
+\left(1+\alpha\delta f_c''^2\right)
+\left(1+\delta f_c''^2\right)^{(\alpha-3)/2}f_c'''
++\frac{1}{2}f_cf_c''=0.
+\]
+\begin{itemize}
+  \item Solve an ODE at each value of $\delta$.
+  \item Large $x$ means small $\delta$: Newtonian behavior.
+  \item Near the leading edge, $\delta$ is large: power-law behavior.
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
+% 10
+\begin{frame}{New Sakiadis power-law solutions: what was missing}
+\begin{itemize}
+  \item Earlier work concluded that Sakiadis power-law solutions fail for $\alpha<1/2$ and $\alpha>1$.
+  \item That conclusion depends on assuming a far-field form with $f_p\to C$.
+  \item The boundary condition only requires $f_p'\to0$; it does not require $f_p$ to approach a constant.
+  \item Alternative far-field structures produce admissible separatrix solutions.
+\end{itemize}
+\vspace{0.3em}
+\begin{center}
+\large These new solutions are essential for comparing Sakiadis power-law predictions to Carreau predictions across shear-thinning and shear-thickening regimes.
+\end{center}
+\end{frame}
+
+% 11
+\begin{frame}{Shear-thinning Sakiadis solutions for $0<\alpha<1/2$}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+The new far-field balance is
+\[
+  f_p(\eta;\alpha)\sim H(\eta+J)^p,
+  \qquad
+  p=\frac{1-2\alpha}{2-\alpha}.
+\]
+\[
+  H=\left(\frac{\alpha(\alpha+1)(2-p)}{p^{1-\alpha}(1-p)^{1-\alpha}}\right)^{1/(2-\alpha)}.
+\]
+\begin{itemize}
+  \item Then $0<p<1$, so $f_p'\to0$ while $f_p$ grows sublinearly.
+  \item This satisfies the Sakiadis far-field velocity condition.
+\end{itemize}
+\end{column}
+\begin{column}{0.48\textwidth}
+\centering
+\figinclude[width=0.94\linewidth]{new_thinning_asymptotic.eps}
+\end{column}
+\end{columns}
+\end{frame}
+
+% 12
+\begin{frame}{The admissible solution is a separatrix}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.45\textwidth}
+Shoot with
+\[
+  f_p''(0;\alpha)=\kappa.
+\]
+There is a critical value $\kappa=\kappa_p$ such that:
+\begin{itemize}
+  \item above it, solutions remain monotone;
+  \item below it, solutions turn over;
+  \item at it, $f_p'\to0$ smoothly.
+\end{itemize}
+\end{column}
+\begin{column}{0.52\textwidth}
+\centering
+\figinclude[width=0.88\linewidth]{fig3.eps}
+\end{column}
+\end{columns}
+\end{frame}
+
+% 13
+\begin{frame}{Shear-thickening Sakiadis solutions for $\alpha>1$}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.47\textwidth}
+For $\alpha>1$, the separatrix has finite thickness:
+\[
+  f_p(\eta;\alpha)=C_2 \quad \text{for } \eta\ge C_1.
+\]
+Consequently,
+\[
+  u_x=Uf_p'(\eta;\alpha)=0 \quad \text{outside the boundary layer.}
+\]
+The solution is $C^4$ but not $C^5$ at the boundary-layer edge.
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering
+\figinclude[width=0.82\linewidth]{fig6.eps}
+\end{column}
+\end{columns}
+\end{frame}
+
+% 14
+\begin{frame}{Finite-width thickening solutions have a fifth-derivative jump}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+\begin{itemize}
+  \item Velocity, velocity gradient, and curvature remain continuous.
+  \item The fifth derivative jumps at the edge of the finite-thickness layer.
+  \item This mirrors the known singular structure in shear-thickening Blasius flow.
+  \item The Carreau model smooths this because it recovers Newtonian viscosity at low shear.
+\end{itemize}
+\end{column}
+\begin{column}{0.48\textwidth}
+\centering
+\figinclude[width=0.9\linewidth]{new_thickening_deriv.eps}
+\end{column}
+\end{columns}
+\end{frame}
+
+% 15
+\begin{frame}{The new branches connect continuously in wall shear}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.42\textwidth}
+Define the dimensionless wall-shear coefficient
+\[
+  \kappa_p=f_p''(0;\alpha).
+\]
+The computed values vary continuously through:
+\begin{itemize}
+  \item the known range $1/2<\alpha\le1$,
+  \item the new shear-thinning range $\alpha<1/2$,
+  \item the new shear-thickening range $\alpha>1$.
+\end{itemize}
+\end{column}
+\begin{column}{0.55\textwidth}
+\centering
+\figinclude[width=0.92\linewidth]{fig5.eps}
+\end{column}
+\end{columns}
+\end{frame}
+
+% 16
+\begin{frame}{Wall-shear scalings for comparison}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.49\textwidth}
+With $\bar\tau_i=\tau_i/(\rho U^2)$,
+\[
+  \bar\tau_n = \kappa_n \Reyn_{n,x}^{-1/2}.
+\]
+\[
+  \bar\tau_p = \kappa_p^\alpha
+  \De^{(\alpha-1)/(\alpha+1)}
+  \Reyn_{n,x}^{-\alpha/(\alpha+1)}.
+\]
+\end{column}
+\begin{column}{0.49\textwidth}
+\[
+  \bar\tau_c = \kappa_c\Reyn_{n,x}^{-1/2}
+  \left(1+\kappa_c^2\delta\right)^{(\alpha-1)/2},
+  \qquad \kappa_c=f_c''(0;\delta).
+\]
+\[
+  \delta=\frac{\De^2}{\Reyn_{n,x}}.
+\]
+\begin{block}{Interpretation}
+Changing $x$ changes $\Reyn_{n,x}$ and hence changes which part of the rheological curve the boundary layer samples.
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+% 17
+\begin{frame}{Carreau wall shear follows the two self-similar asymptotes}
+\begin{center}
+\figinclude[height=0.36\textheight]{new_shear.eps}\hspace{1em}
+\figinclude[height=0.36\textheight]{new_shear_blas.eps}
+\end{center}
+\vspace{-0.4em}
+\begin{itemize}
+  \item Near the leading edge: high shear, Carreau follows the power-law similarity prediction.
+  \item Far downstream: low shear, Carreau approaches Newtonian wall shear.
+  \item The transition occurs where the Newtonian and power-law asymptotes cross.
+\end{itemize}
+\end{frame}
+
+% 18
+\begin{frame}{Asymptotic agreement and a finite high-shear correction}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.5\textwidth}
+Downstream:
+\[
+  \bar\tau_c\sim \bar\tau_n
+  \qquad \text{as }\Reyn_{n,x}\to\infty.
+\]
+Near the leading edge:
+\[
+  \bar\tau_c\sim (1-c(\alpha))\bar\tau_p
+  \qquad \text{as }\Reyn_{n,x}\to0.
+\]
+\begin{itemize}
+  \item The correction is independent of $\De$ in the high-shear limit.
+  \item For $\alpha\in[0.3,1.4]$, the high-shear offset is roughly at most $10$--$11\%$.
+\end{itemize}
+\end{column}
+\begin{column}{0.47\textwidth}
+\centering
+\figinclude[width=0.9\linewidth]{rel_err.eps}\vspace{0.2em}
+\figinclude[width=0.9\linewidth]{fig7.eps}
+\end{column}
+\end{columns}
+\end{frame}
+
+% 19
+\begin{frame}{Why is there any high-shear error?}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.52\textwidth}
+The wall shear is not purely local. For Blasius,
+\[
+  \bar\tau_i = \frac{\dd}{\dd x}\int_0^\infty u_x(U-u_x)\,\dd y,
+  \qquad i=n,c,p.
+\]
+For Sakiadis, use the analogous expression with $U=0$ in the far field.
+\begin{itemize}
+  \item The full velocity profile contributes.
+  \item Power-law and Carreau profiles can have similar near-wall slopes but different far-field behavior.
+  \item That profile difference produces $c(\alpha)$.
+\end{itemize}
+\end{column}
+\begin{column}{0.45\textwidth}
+\centering
+\figinclude[width=0.98\linewidth]{new_profiles_blas.eps}\vspace{0.2em}
+\figinclude[width=0.98\linewidth]{new_profiles.eps}
+\end{column}
+\end{columns}
+\end{frame}
+
+% 20
+\begin{frame}{A practical criterion: when to switch models}
+Set the Newtonian and power-law wall-shear predictions equal. The crossover occurs at
+\[
+  \delta^*=
+  \left(\frac{\kappa_p^\alpha}{\kappa_n}\right)^{2(1+\alpha)/(1-\alpha)}.
+\]
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.5\textwidth}
+\begin{block}{Rule of thumb}
+\begin{itemize}
+  \item $\delta/\delta^*\gg1$: use the power-law similarity solution.
+  \item $\delta/\delta^*\ll1$: use the Newtonian similarity solution.
+  \item Transition region: solve the Carreau one-parameter ODE if accuracy matters.
+\end{itemize}
+\end{block}
+\end{column}
+\begin{column}{0.46\textwidth}
+\begin{itemize}
+  \item $\delta^*$ is relatively insensitive to $\alpha$: roughly $14$--$20$ over a broad range.
+  \item Drag estimates can be obtained by splitting the plate at the $x$ corresponding to $\delta=\delta^*$.
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
+% 21
+\begin{frame}{Conclusions}
+\begin{enumerate}
+  \item Carreau wall shear is well captured by self-similar Newtonian and power-law asymptotes outside the transition region.
+  \item The high-shear power-law approximation has a finite, quantified correction $c(\alpha)$ caused by full-profile differences.
+  \item New Sakiadis power-law similarity solutions exist for $\alpha<1/2$ and $\alpha>1$.
+  \item For $\alpha>1$, the Sakiadis solution is finite-width and $C^4$ but not $C^5$ at its edge.
+  \item The crossover parameter $\delta^*$ gives a low-cost practical approximation framework for non-self-similar Carreau boundary layers.
+\end{enumerate}
+\end{frame}
+
+% 22
+\begin{frame}{Backup: minimal numerical recipe}
+\begin{itemize}
+  \item Convert the relevant BVP to a shooting IVP by prescribing $f''(0)$.
+  \item Truncate $\eta\in[0,\infty)$ to $[0,L]$.
+  \item Use RK45 integration and choose $f''(0)$ so that the far-field condition is met at $\eta=L$.
+  \item Increase $L$ until wall-shear coefficients are converged to the desired tolerance.
+\end{itemize}
+\vspace{0.4em}
+\begin{center}
+This is cheap for power-law/Newtonian models and still manageable for Carreau because only the parameter $\delta$ is swept.
+\end{center}
+\end{frame}
+
+\end{document}
+

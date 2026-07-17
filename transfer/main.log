@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.4.9)  7 MAY 2026 08:58
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.4.9)  7 MAY 2026 14:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1084,16 +1084,24 @@ LaTeX Font Info:    Font shape `T1/ntxtlf/b/n' will be
 Non-PDF special ignored!
 <special> papersize=174mm,247mm
 ]
-<shear_thin_rheo.png, id=40, 991.20313pt x 703.62875pt>
-File: shear_thin_rheo.png Graphic file (type png)
-<use shear_thin_rheo.png>
-Package pdftex.def Info: shear_thin_rheo.png  used on input line 50.
-(pdftex.def)             Requested size: 172.79883pt x 122.66446pt.
-<shear_thick_rheo.png, id=42, 986.68625pt x 700.6175pt>
-File: shear_thick_rheo.png Graphic file (type png)
-<use shear_thick_rheo.png>
-Package pdftex.def Info: shear_thick_rheo.png  used on input line 51.
-(pdftex.def)             Requested size: 172.79883pt x 122.69542pt.
+
+pdfTeX warning: pdflatex (file ./rheo_thin_cropped_rotated.pdf): PDF inclusion:
+ found PDF version <1.7>, but at most version <1.5> allowed
+<rheo_thin_cropped_rotated.pdf, id=40, 564.28816pt x 425.71045pt>
+File: rheo_thin_cropped_rotated.pdf Graphic file (type pdf)
+<use rheo_thin_cropped_rotated.pdf>
+Package pdftex.def Info: rheo_thin_cropped_rotated.pdf  used on input line 50.
+(pdftex.def)             Requested size: 172.79883pt x 130.35791pt.
+
+
+pdfTeX warning: pdflatex (file ./rheo_thick_cropped_rotated.pdf): PDF inclusion
+: found PDF version <1.7>, but at most version <1.5> allowed
+<rheo_thick_cropped_rotated.pdf, id=41, 554.34103pt x 399.18134pt>
+File: rheo_thick_cropped_rotated.pdf Graphic file (type pdf)
+<use rheo_thick_cropped_rotated.pdf>
+Package pdftex.def Info: rheo_thick_cropped_rotated.pdf  used on input line 51.
+
+(pdftex.def)             Requested size: 172.79883pt x 124.43321pt.
 LaTeX Font Info:    Font shape `T1/ntxtlf/m/n' will be
 (Font)              scaled to size 8.73262pt on input line 52.
 LaTeX Font Info:    Calculating math sizes for size <8.73262> on input line 52.
@@ -1113,13 +1121,17 @@ LaTeX Font Info:    Font shape `OT1/ntxtlf/b/n' will be
 LaTeX Font Info:    Font shape `T1/ntxtlf/m/it' will be
 (Font)              scaled to size 8.73262pt on input line 52.
 
+Underfull \vbox (badness 1067) has occurred while \output is active []
+
+
 Overfull \hbox (1.61096pt too wide) has occurred while \output is active
 [] 
  []
 
-[2 <./shear_thin_rheo.png> <./shear_thick_rheo.png>]pdfTeX warning (ext4): dest
-ination with the same identifier (name{equation.1.1}) has been already used, du
-plicate ignored
+[2 <./rheo_thin_cropped_rotated.pdf, page is rotated 90 degrees> <./rheo_thick_
+cropped_rotated.pdf, page is rotated 90 degrees>]pdfTeX warning (ext4): destina
+tion with the same identifier (name{equation.1.1}) has been already used, dupli
+cate ignored
 <to be read again> 
                    \relax 
 l.61 \begin{equation}
@@ -1159,19 +1171,25 @@ LaTeX Font Info:    Font shape `T1/ntxtlf/m/n' will be
 LaTeX Font Info:    Font shape `T1/ntxtlf/m/n' will be
 (Font)              scaled to size 5.90709pt on input line 75.
  [4]
-<schem_fixed.png, id=131, 790.955pt x 587.69562pt>
-File: schem_fixed.png Graphic file (type png)
-<use schem_fixed.png>
-Package pdftex.def Info: schem_fixed.png  used on input line 87.
-(pdftex.def)             Requested size: 364.79883pt x 271.0517pt.
+
+pdfTeX warning: pdflatex (file ./schematics_pdf_cropped.pdf): PDF inclusion: fo
+und PDF version <1.7>, but at most version <1.5> allowed
+<schematics_pdf_cropped.pdf, id=128, 546.41138pt x 428.33025pt>
+File: schematics_pdf_cropped.pdf Graphic file (type pdf)
+<use schematics_pdf_cropped.pdf>
+Package pdftex.def Info: schematics_pdf_cropped.pdf  used on input line 87.
+(pdftex.def)             Requested size: 364.79883pt x 285.96019pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
  [5pdfTeX warning (ext4): destination with the same identifier (name{equation.2
 .1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.113 \end{align}
-                  <./schem_fixed.png>]pdfTeX warning (ext4): destination with t
-he same identifier (name{equation.2.2}) has been already used, duplicate ignore
-d
+l.101     \end{align}
+                      In (\ref{stress_tensor_component}), a generalized Newt...
+ <./schematics_pdf_cropped.pdf>]pdfTeX warning (ext4): destination with the sam
+e identifier (name{equation.2.2}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.120 ...ng the substitutions \begin{subequations}
@@ -1217,13 +1235,7 @@ tifier (name{equation.2.2}) has been already used, duplicate ignored
                    \relax 
 l.124     \begin{equation}
                           pdfTeX warning (ext4): destination with the same iden
-tifier (name{equation.2.3}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.127 ...E for $f_p$ given by \begin{subequations}
-                                                   \begin{equation}pdfTeX warni
-ng (ext4): destination with the same identifier (name{equation.2.1}) has been a
-lready used, duplicate ignored
+tifier (name{equation.2.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.127 ... by \begin{subequations} \begin{equation}
@@ -1269,30 +1281,6 @@ pdfTeX warning (ext4): destination with the same identifier (name{equation.2.2}
 <to be read again> 
                    \relax 
 l.128 ...dary-conditions given as \begin{equation}
-                                                   f_p(0; \alpha)=0~~~~f_p'(...
-pdfTeX warning (ext4): destination with the same identifier (name{equation.2.3}
-) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.128 ...ius}) \end{equation} and \begin{equation}
-                                                   f_p(0; \alpha)=0~~~~f_p'(...
-pdfTeX warning (ext4): destination with the same identifier (name{equation.2.3}
-) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.128 ...ius}) \end{equation} and \begin{equation}
-                                                   f_p(0; \alpha)=0~~~~f_p'(...
-pdfTeX warning (ext4): destination with the same identifier (name{equation.2.3}
-) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.128 ...ius}) \end{equation} and \begin{equation}
-                                                   f_p(0; \alpha)=0~~~~f_p'(...
-pdfTeX warning (ext4): destination with the same identifier (name{equation.2.3}
-) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.128 ...ius}) \end{equation} and \begin{equation}
                                                    f_p(0; \alpha)=0~~~~f_p'(...
 pdfTeX warning (ext4): destination with the same identifier (name{equation.2.1}
 ) has been already used, duplicate ignored
@@ -1347,15 +1335,25 @@ Overfull \hbox (1.61096pt too wide) has occurred while \output is active
  []
 
 [6pdfTeX warning (ext4): destination with the same identifier (name{equation.2.
-4}) has been already used, duplicate ignored
+3}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.137 
+l.133 
+      pdfTeX warning (ext4): destination with the same identifier (name{equatio
+n.2.3}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.133 
+      pdfTeX warning (ext4): destination with the same identifier (name{equatio
+n.2.4}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.133 
       pdfTeX warning (ext4): destination with the same identifier (name{equatio
 n.2.5}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.137 
+l.133 
       ]pdfTeX warning (ext4): destination with the same identifier (name{equati
 on.2.1}) has been already used, duplicate ignored
 <to be read again> 
@@ -1396,18 +1394,32 @@ Overfull \hbox (1.61096pt too wide) has occurred while \output is active
 1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.173 
-      pdfTeX warning (ext4): destination with the same identifier (name{equatio
-n.3.2}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.173 
-      pdfTeX warning (ext4): destination with the same identifier (name{equatio
-n.3.3}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.173 
-      ]
+l.168 ...dfrac{1-2\alpha}{2-\alpha} \end{equation}
+                                                    and \begin{equation}]pdfTeX
+ warning (ext4): destination with the same identifier (name{equation.3.3}) has 
+been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.168 ...pha} \end{equation}  and \begin{equation}
+                                                  pdfTeX warning (ext4): destin
+ation with the same identifier (name{equation.3.3}) has been already used, dupl
+icate ignored
+<to be read again> 
+                   \relax 
+l.168 ...pha} \end{equation}  and \begin{equation}
+                                                  pdfTeX warning (ext4): destin
+ation with the same identifier (name{equation.3.3}) has been already used, dupl
+icate ignored
+<to be read again> 
+                   \relax 
+l.168 ...pha} \end{equation}  and \begin{equation}
+                                                  pdfTeX warning (ext4): destin
+ation with the same identifier (name{equation.3.3}) has been already used, dupl
+icate ignored
+<to be read again> 
+                   \relax 
+l.168 ...pha} \end{equation}  and \begin{equation}
+                                                  
 Package epstopdf Info: Source file: <fig3.eps>
 (epstopdf)                    date: 2026-05-07 08:49:30
 (epstopdf)                    size: 554775 bytes
@@ -1423,6 +1435,12 @@ File: fig3-eps-converted-to.pdf Graphic file (type pdf)
 <use fig3-eps-converted-to.pdf>
 Package pdftex.def Info: fig3-eps-converted-to.pdf  used on input line 176.
 (pdftex.def)             Requested size: 230.40234pt x 186.50932pt.
+ [9pdfTeX warning (ext4): destination with the same identifier (name{equation.3
+.2}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.182 
+       <./fig3-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <new_thinning_asymptotic.eps>
 (epstopdf)                    date: 2026-05-07 08:49:30
 (epstopdf)                    size: 27076 bytes
@@ -1434,7 +1452,7 @@ df>
 s-converted-to.pdf new_thinning_asymptotic.eps>
 (epstopdf)             \includegraphics on input line 185.
 Package epstopdf Info: Output file is already uptodate.
-<new_thinning_asymptotic-eps-converted-to.pdf, id=237, 582.175pt x 392.46625pt>
+<new_thinning_asymptotic-eps-converted-to.pdf, id=248, 582.175pt x 392.46625pt>
 
 File: new_thinning_asymptotic-eps-converted-to.pdf Graphic file (type pdf)
 <use new_thinning_asymptotic-eps-converted-to.pdf>
@@ -1451,7 +1469,7 @@ Package epstopdf Info: Source file: <fig5.eps>
 fig5.eps>
 (epstopdf)             \includegraphics on input line 192.
 Package epstopdf Info: Output file is already uptodate.
-<fig5-eps-converted-to.pdf, id=244, 462.72874pt x 347.2975pt>
+<fig5-eps-converted-to.pdf, id=255, 462.72874pt x 347.2975pt>
 File: fig5-eps-converted-to.pdf Graphic file (type pdf)
 <use fig5-eps-converted-to.pdf>
 Package pdftex.def Info: fig5-eps-converted-to.pdf  used on input line 192.
@@ -1478,8 +1496,6 @@ LaTeX Font Info:    Font shape `T1/ntxsups/m/n' will be
 (Font)              scaled to size 10.74011pt on input line 200.
 LaTeX Font Info:    Font shape `T1/ntxsups/m/n' will be
 (Font)              scaled to size 8.73262pt on input line 200.
- [9 <./fig3-eps-converted-to.pdf>] [10 <./new_thinning_asymptotic-eps-converted
--to.pdf> <./fig5-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <fig6.eps>
 (epstopdf)                    date: 2026-05-07 08:49:30
 (epstopdf)                    size: 133351 bytes
@@ -1490,12 +1506,13 @@ Package epstopdf Info: Source file: <fig6.eps>
 fig6.eps>
 (epstopdf)             \includegraphics on input line 206.
 Package epstopdf Info: Output file is already uptodate.
-<fig6-eps-converted-to.pdf, id=345, 927.465pt x 750.805pt>
+<fig6-eps-converted-to.pdf, id=272, 927.465pt x 750.805pt>
 File: fig6-eps-converted-to.pdf Graphic file (type pdf)
 <use fig6-eps-converted-to.pdf>
 Package pdftex.def Info: fig6-eps-converted-to.pdf  used on input line 206.
 (pdftex.def)             Requested size: 192.0pt x 155.42825pt.
- [11 <./fig6-eps-converted-to.pdf>]
+ [10 <./new_thinning_asymptotic-eps-converted-to.pdf>] [11 <./fig5-eps-converte
+d-to.pdf> <./fig6-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <new_thickening_deriv.eps>
 (epstopdf)                    date: 2026-05-07 08:49:30
 (epstopdf)                    size: 14363 bytes
@@ -1507,7 +1524,7 @@ Package epstopdf Info: Source file: <new_thickening_deriv.eps>
 onverted-to.pdf new_thickening_deriv.eps>
 (epstopdf)             \includegraphics on input line 217.
 Package epstopdf Info: Output file is already uptodate.
-<new_thickening_deriv-eps-converted-to.pdf, id=367, 578.16pt x 397.485pt>
+<new_thickening_deriv-eps-converted-to.pdf, id=363, 578.16pt x 397.485pt>
 File: new_thickening_deriv-eps-converted-to.pdf Graphic file (type pdf)
 <use new_thickening_deriv-eps-converted-to.pdf>
 Package pdftex.def Info: new_thickening_deriv-eps-converted-to.pdf  used on inp
@@ -1529,7 +1546,7 @@ Package epstopdf Info: Source file: <new_shear.eps>
 .pdf new_shear.eps>
 (epstopdf)             \includegraphics on input line 240.
 Package epstopdf Info: Output file is already uptodate.
-<new_shear-eps-converted-to.pdf, id=410, 1011.78pt x 433.62pt>
+<new_shear-eps-converted-to.pdf, id=406, 1011.78pt x 433.62pt>
 File: new_shear-eps-converted-to.pdf Graphic file (type pdf)
 <use new_shear-eps-converted-to.pdf>
 Package pdftex.def Info: new_shear-eps-converted-to.pdf  used on input line 240
@@ -1545,7 +1562,7 @@ Package epstopdf Info: Source file: <new_shear_blas.eps>
 ed-to.pdf new_shear_blas.eps>
 (epstopdf)             \includegraphics on input line 241.
 Package epstopdf Info: Output file is already uptodate.
-<new_shear_blas-eps-converted-to.pdf, id=411, 1011.78pt x 433.62pt>
+<new_shear_blas-eps-converted-to.pdf, id=407, 1011.78pt x 433.62pt>
 File: new_shear_blas-eps-converted-to.pdf Graphic file (type pdf)
 <use new_shear_blas-eps-converted-to.pdf>
 Package pdftex.def Info: new_shear_blas-eps-converted-to.pdf  used on input lin
@@ -1563,7 +1580,7 @@ Package epstopdf Info: Source file: <rel_err.eps>
 df rel_err.eps>
 (epstopdf)             \includegraphics on input line 258.
 Package epstopdf Info: Output file is already uptodate.
-<rel_err-eps-converted-to.pdf, id=517, 538.01pt x 314.17375pt>
+<rel_err-eps-converted-to.pdf, id=514, 538.01pt x 314.17375pt>
 File: rel_err-eps-converted-to.pdf Graphic file (type pdf)
 <use rel_err-eps-converted-to.pdf>
 Package pdftex.def Info: rel_err-eps-converted-to.pdf  used on input line 258.
@@ -1578,7 +1595,7 @@ Package epstopdf Info: Source file: <fig7.eps>
 fig7.eps>
 (epstopdf)             \includegraphics on input line 265.
 Package epstopdf Info: Output file is already uptodate.
-<fig7-eps-converted-to.pdf, id=518, 497.86pt x 354.32375pt>
+<fig7-eps-converted-to.pdf, id=515, 497.86pt x 354.32375pt>
 File: fig7-eps-converted-to.pdf Graphic file (type pdf)
 <use fig7-eps-converted-to.pdf>
 Package pdftex.def Info: fig7-eps-converted-to.pdf  used on input line 265.
@@ -1599,7 +1616,7 @@ Package epstopdf Info: Source file: <new_profiles_blas.eps>
 erted-to.pdf new_profiles_blas.eps>
 (epstopdf)             \includegraphics on input line 280.
 Package epstopdf Info: Output file is already uptodate.
-<new_profiles_blas-eps-converted-to.pdf, id=603, 1156.32pt x 794.97pt>
+<new_profiles_blas-eps-converted-to.pdf, id=600, 1156.32pt x 794.97pt>
 File: new_profiles_blas-eps-converted-to.pdf Graphic file (type pdf)
 <use new_profiles_blas-eps-converted-to.pdf>
 Package pdftex.def Info: new_profiles_blas-eps-converted-to.pdf  used on input 
@@ -1615,7 +1632,7 @@ Package epstopdf Info: Source file: <new_profiles.eps>
 -to.pdf new_profiles.eps>
 (epstopdf)             \includegraphics on input line 281.
 Package epstopdf Info: Output file is already uptodate.
-<new_profiles-eps-converted-to.pdf, id=604, 1156.32pt x 794.97pt>
+<new_profiles-eps-converted-to.pdf, id=601, 1156.32pt x 794.97pt>
 File: new_profiles-eps-converted-to.pdf Graphic file (type pdf)
 <use new_profiles-eps-converted-to.pdf>
 Package pdftex.def Info: new_profiles-eps-converted-to.pdf  used on input line 
@@ -1628,9 +1645,6 @@ Overfull \hbox (1.61096pt too wide) has occurred while \output is active
 
 [16 <./new_profiles_blas-eps-converted-to.pdf> <./new_profiles-eps-converted-to
 .pdf>] [17]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
 Overfull \hbox (1.61096pt too wide) has occurred while \output is active
 [] 
  []
@@ -1662,12 +1676,12 @@ it/8.73 AIChE Jour-nal \T1/ntxtlf/b/n/8.73 40 \T1/ntxtlf/m/n/8.73 (2), 229--242
 ) [19] (./main.aux) ) 
 Here is how much of TeX's memory you used:
  18344 strings out of 478287
- 285009 string characters out of 5849290
- 568281 words of memory out of 5000000
- 36099 multiletter control sequences out of 15000+600000
+ 285317 string characters out of 5849290
+ 569516 words of memory out of 5000000
+ 36100 multiletter control sequences out of 15000+600000
  653757 words of font info for 280 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,13n,131p,1789b,518s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 84i,13n,131p,2025b,518s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/newtx/ntx-e
 c-tlf-pc.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/newtx/ntxsups_t1.en
 c}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/newtx/ntx-ot1-tlf.enc}{/usr/sh
@@ -1682,10 +1696,10 @@ re/texlive/texmf-dist/fonts/type1/public/newtx/txsys.pfb></usr/share/texlive/te
 xmf-dist/fonts/type1/public/newtx/ztmb.pfb></usr/share/texlive/texmf-dist/fonts
 /type1/public/newtx/ztmr.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
 newtx/ztmri.pfb>
-Output written on main.pdf (19 pages, 880743 bytes).
+Output written on main.pdf (19 pages, 770738 bytes).
 PDF statistics:
- 854 PDF objects out of 1000 (max. 8388607)
- 517 compressed objects within 6 object streams
+ 853 PDF objects out of 1000 (max. 8388607)
+ 519 compressed objects within 6 object streams
  94 named destinations out of 1000 (max. 500000)
  183 words of extra memory for PDF output out of 10000 (max. 10000000)
 
